@@ -3,26 +3,28 @@
 
 #[cfg(test)]
 #[embedded_test::tests]
+
 mod tests {
-    use esp_hal::{clock::ClockControl, delay::Delay, peripherals::Peripherals, prelude::*};
+    use embassy_stm32 as _; // provide interrupt vectors and handlers
+    // use esp_hal::{clock::ClockControl, delay::Delay, peripherals::Peripherals, prelude::*};
 
     // Optional: A init function which is called before every test
-    #[init]
-    fn init() -> Delay {
-        let peripherals = Peripherals::take();
-        let system = peripherals.SYSTEM.split();
-        let clocks = ClockControl::max(system.clock_control).freeze();
-        let delay = Delay::new(&clocks);
+    // #[init]
+    // fn init() -> Delay {
+    //     let peripherals = Peripherals::take();
+    //     let system = peripherals.SYSTEM.split();
+    //     let clocks = ClockControl::max(system.clock_control).freeze();
+    //     let delay = Delay::new(&clocks);
 
-        // The init function can return some state, which can be consumed by the testcases
-        delay
-    }
+    //     // The init function can return some state, which can be consumed by the testcases
+    //     delay
+    // }
 
     // A test which takes the state returned by the init function (optional)
-    #[test]
-    fn takes_state(_state: Delay) {
-        assert!(true)
-    }
+    // #[test]
+    // fn takes_state(_state: Delay) {
+    //     assert!(true)
+    // }
 
     // Example for a test which is conditionally enabled
     #[test]

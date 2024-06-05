@@ -2,7 +2,7 @@ use std::env;
 
 fn main() {
     // esp-hal specific
-    println!("cargo:rustc-link-arg=-Tlinkall.x");
+    println!("cargo:rustc-link-arg=-Tlink.x");
 
     // add linker script for embedded-test!!
     println!("cargo::rustc-link-arg-tests=-Tembedded-test.x");

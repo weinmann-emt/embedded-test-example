@@ -16,28 +16,37 @@ log = { version = "0.4.20", optional = true }
 defmt = { version = "0.3.8", optional = true }
 defmt-rtt = { version = "0.4.1", optional = true }
 
+cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
+cortex-m-rt = "0.7.3"
 # dependencies when using the embassy feature
 # Note: You need to enable at least one executor feature on embassy 0.5.x
-embassy-executor = { default-features = false, version = "0.5.0", features = ["executor-thread", "arch-riscv32"], optional = true }
+embassy-executor = { default-features = false, version = "0.5.0", features = ["executor-thread", "arch-cortex-m"] }
+embassy-stm32 = { version = "0.1.0", git = "https://github.com/embassy-rs/embassy.git", features = [
+    "stm32h743zi",
+    "time-driver-any",
+] }
 
 # Esp32 related dependencies for main.rs. Note: embedded-test comes with its own panic handler and logging sink.
-esp-hal = { version = "0.17.0", features = ["esp32c6"] }
-esp-backtrace = { version = "0.11.0", features = [
-    "esp32c6",
-    "exception-handler",
-    "panic-handler",
-    "println",
-] }
-esp-println = { version = "0.9.0", default-features = false, features = ["esp32c6", "log", "jtag-serial", "colors"] }
+# esp-hal = { version = "0.17.0", features = ["esp32c6"] }
+# esp-backtrace = { version = "0.11.0", features = [
+#     "esp32c6",
+#     "exception-handler",
+#     "panic-handler",
+#     "println",
+# ] }
+# esp-println = { version = "0.9.0", default-features = false, features = ["esp32c6", "log", "jtag-serial", "colors"] }
 
 
 [dev-dependencies]
-embedded-test = { version = "0.4.0" }
+embedded-test = "0.4.0"
+# WORKING with `cargo install --force probe-rs --git https://github.com/probe-rs/probe-rs --rev 0f2eeb2 --features cli`
+# and `runner = "probe-rs test --chip STM32H743ZITx --"` in .cargo/config
+# embedded-test = { git = "https://github.com/probe-rs/embedded-test.git", rev = "397f9b7" }
 
 [features]
 default = ["log"]
-embassy = ["dep:embassy-executor", "embedded-test/embassy"]
-log = ["dep:log", "embedded-test/init-log"]
+embassy = ["embedded-test/embassy"]
+# log = ["dep:log", "embedded-test/init-log"]
 defmt = ["dep:defmt", "dep:defmt-rtt"]
 
 [[bin]]

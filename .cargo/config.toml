@@ -3,10 +3,10 @@ ESP_LOGLEVEL = "debug"
 DEFMT_LOG = "debug"
 
 [build]
-target = "riscv32imac-unknown-none-elf"
+target = "thumbv7em-none-eabihf"
 
-[target.riscv32imac-unknown-none-elf]
-runner = "probe-rs run --chip esp32c6"
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+runner = "probe-rs run --chip STM32H743ZITx --log-file=log.txt"
 
 rustflags = [
     # Required to obtain backtraces (e.g. when using the "esp-backtrace" crate.)
